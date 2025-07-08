@@ -1,11 +1,12 @@
-from datetime import datetime
+from sqlmodel import SQLModel, Field
 from typing import Optional
-from pydantic import BaseModel
+from datetime import datetime
+import uuid
 
-class Souvenir(BaseModel): #sge Majuscule pour différentier les classes des fonctions
-    id: str
+class Souvenir(SQLModel, table=True):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()), primary_key=True)
     auteur: str
     contenu: str
     contexte: Optional[str] = None
-    date: datetime = datetime.now()
+    date: datetime = Field(default_factory=datetime.now)
     importance_globale: float = 0.5

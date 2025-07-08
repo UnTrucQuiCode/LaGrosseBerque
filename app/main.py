@@ -1,5 +1,8 @@
 from fastapi import FastAPI
 from app.dialogue.router import dialogue_router
+from app.memory.db import init_db
+
+init_db()
 
 app = FastAPI(title="Arch.Noesis")
 

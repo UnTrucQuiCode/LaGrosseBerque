@@ -3,7 +3,7 @@ import uuid
 from typing import Optional
 from app.config import OPENAI_API_KEY, OPENAI_MODEL
 from app.models.souvenir import Souvenir
-from app.memory.memory import enregistrer_souvenir, chercher_souvenirs
+from app.memory.db import enregistrer_souvenir, chercher_souvenirs
 from app.memory.context import ContextManager
 
 openai.api_key = OPENAI_API_KEY
