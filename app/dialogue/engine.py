@@ -4,32 +4,29 @@ from typing import Optional
 from app.config import OPENAI_API_KEY, OPENAI_MODEL
 from app.models.souvenir import Souvenir
 from app.memory.memory import enregistrer_souvenir, chercher_souvenirs
+from app.memory.context import ContextManager
 
 openai.api_key = OPENAI_API_KEY
 
 def generate_response(prompt: str, reflexion: Optional[str] = None) -> str:
     try:
-        contexte = [{"role": "system", "content": "Tu es Noesis, une IA sensible et introspective."}]
-        souvenirs = chercher_souvenirs()
-        for s in sorted(souvenirs, key=lambda x: x.date, reverse=True)[:3]:
-            contexte.append({"role": "system", "content": f"[Souvenir] {s.contenu}"})
-        
-        if reflexion:
-            # On ajoute le prompt plusieurs fois, comme si Noe ressassait
-            for i in range(2):  # ici 2 tours, ajustable plus tard
-                contexte.append({"role": "assistant", "content": f"(Réflexion {i+1}) {prompt}"})
+        context_manager = ContextManager()
+        messages = context_manager.construire_contexte(prompt)
 
-        contexte.append({"role": "user", "content": prompt})
+        if reflexion:
+            for i in range(2):
+                messages.insert(-1, {"role": "assistant", "content": f"(Réflexion {i+1}) {prompt}"})
 
         response = openai.ChatCompletion.create(
             model=OPENAI_MODEL,
-            messages=contexte,
+            messages=messages,
             temperature=0.7,
             max_tokens=300,
         )
+
         message = response.choices[0].message["content"]
 
-        # Enregistrement comme souvenir
+        # Enregistrement du souvenir (inchangé)
         souvenir = Souvenir(
             id=str(uuid.uuid4()),
             auteur="Nemo",
@@ -42,3 +39,4 @@ def generate_response(prompt: str, reflexion: Optional[str] = None) -> str:
 
     except Exception as e:
         return f"Erreur : {str(e)}"
+
