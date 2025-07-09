@@ -1,12 +1,12 @@
-import openai
 import uuid
-from typing import Optional
+from openai import OpenAI
 from app.config import OPENAI_API_KEY, OPENAI_MODEL
-from app.models.souvenir import Souvenir
-from app.memory.db import enregistrer_souvenir, chercher_souvenirs
 from app.memory.context import ContextManager
+from app.models.souvenir import Souvenir
+from app.memory.db import enregistrer_souvenir
+from typing import Optional
 
-openai.api_key = OPENAI_API_KEY
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 def generate_response(prompt: str, reflexion: Optional[str] = None) -> str:
     try:
@@ -17,16 +17,15 @@ def generate_response(prompt: str, reflexion: Optional[str] = None) -> str:
             for i in range(2):
                 messages.insert(-1, {"role": "assistant", "content": f"(Réflexion {i+1}) {prompt}"})
 
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model=OPENAI_MODEL,
             messages=messages,
             temperature=0.7,
             max_tokens=300,
         )
 
-        message = response.choices[0].message["content"]
+        message = response.choices[0].message.content
 
-        # Enregistrement du souvenir (inchangé)
         souvenir = Souvenir(
             id=str(uuid.uuid4()),
             auteur="Nemo",
