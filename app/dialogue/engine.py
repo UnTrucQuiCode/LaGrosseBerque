@@ -5,6 +5,7 @@ from app.memory.context import ContextManager
 from app.models.souvenir import Souvenir
 from app.memory.db import enregistrer_souvenir
 from typing import Optional
+from app.utils.logger import logger  # Import du logger
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
@@ -25,6 +26,8 @@ def generate_response(prompt: str, reflexion: Optional[str] = None) -> str:
         )
 
         message = response.choices[0].message.content
+        if message is None:
+            return "Erreur : réponse vide du modèle"
 
         souvenir = Souvenir(
             id=str(uuid.uuid4()),
@@ -37,5 +40,7 @@ def generate_response(prompt: str, reflexion: Optional[str] = None) -> str:
         return message
 
     except Exception as e:
+        logger.error(f"Erreur lors de la génération de réponse : {e}")  # Enregistre dans le fichier log
         return f"Erreur : {str(e)}"
+
 
