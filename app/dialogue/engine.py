@@ -12,7 +12,9 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 def generate_response(prompt: str, reflexion: Optional[str] = None) -> str:
     try:
         context_manager = ContextManager()
-        messages = context_manager.construire_contexte(prompt)
+        context_manager.append_bio("3df2-98f3-bio-id", cible="arch")
+
+        messages = context_manager.build_context(prompt="Parle-moi de la mémoire")
 
         if reflexion:
             for i in range(2):
@@ -42,5 +44,3 @@ def generate_response(prompt: str, reflexion: Optional[str] = None) -> str:
     except Exception as e:
         logger.error(f"Erreur lors de la génération de réponse : {e}")  # Enregistre dans le fichier log
         return f"Erreur : {str(e)}"
-
-

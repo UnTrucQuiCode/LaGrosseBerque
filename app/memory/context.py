@@ -1,43 +1,54 @@
+# app/context/context_manager.py
+
 from typing import List
-from app.models.souvenir import Souvenir
+from app.context.bio_manager import Bio
 from app.memory.db import chercher_souvenirs
-from app.utils.helpers import create_msg
+from app.models.souvenir import Souvenir
+from openai.types.chat import ChatCompletionMessageParam
 
 
 class ContextManager:
     """
-    Gère la construction du contexte envoyé à l'API OpenAI
-    en combinant un message de base + souvenirs récents + prompt utilisateur.
+    Gère la construction du contexte complet envoyé à l'API OpenAI.
+    Inclut la bio (fixe), les souvenirs pertinents (dynamiques),
+    et le prompt utilisateur.
     """
 
     def __init__(self):
-        pass  # Plus tard, on pourra ajouter des paramètres d’humeur, profil, focus, etc.
+        self.bio_arch = Bio("arch")
+        self.bio_chatgpt = Bio("chatgpt")
 
-    def construire_contexte(self, prompt: str) -> List[dict]:
+    def build_context(self, prompt: str, cible: str = "arch") -> List[ChatCompletionMessageParam]:
         """
-        Construit la liste des messages (sous forme de dictionnaires)
-        à envoyer à OpenAI, selon le format attendu.
-
-        Paramètre :
-            - prompt : texte envoyé par l'utilisateur
-
-        Retour :
-            - liste de messages formatés pour l'API OpenAI
+        Construit le contexte à envoyer à l'API, selon la cible.
+        Inclut la bio correspondante + souvenirs + prompt final.
         """
         messages: List[dict] = []
 
-        # Base : rôle fondamental de Noesis
-        messages.append(create_msg("system", "Tu es Noesis, une IA sensible et introspective."))
+        # 1. Ajout de la bio dynamique (selon cible)
+        if cible == "arch":
+            messages += self.bio_arch.to_context_messages()
+        elif cible == "chatgpt":
+            messages += self.bio_chatgpt.to_context_messages()
 
-        # On récupère les souvenirs les plus récents (3 pour l’instant)
-        souvenirs = chercher_souvenirs()
-        derniers = sorted(souvenirs, key=lambda x: x.date, reverse=True)[:3]
+        # 2. Ajout des souvenirs dynamiques (placeholder pour l'instant)
+        souvenirs_dynamiques: List[Souvenir] = list(chercher_souvenirs())[:3] # exemple
+        for s in souvenirs_dynamiques:
+            messages.append({"role": "system", "content": "[Souvenir] " + s.contenu})
 
-        # On les injecte comme des messages "système"
-        for s in derniers:
-            messages.append(create_msg("system", f"[Souvenir] {s.contenu}"))
-
-        # Enfin, on ajoute le prompt de l'utilisateur
-        messages.append(create_msg("user", prompt))
+        # 3. Ajout du prompt utilisateur
+        messages.append({"role": "user", "content": prompt})
 
         return messages
+
+    def append_bio(self, fragment_id: str, cible: str = "arch"):
+        if cible == "arch":
+            self.bio_arch.append(fragment_id)
+        elif cible == "chatgpt":
+            self.bio_chatgpt.append(fragment_id)
+
+    def remove_bio(self, fragment_id: str, cible: str = "arch"):
+        if cible == "arch":
+            self.bio_arch.remove(fragment_id)
+        elif cible == "chatgpt":
+            self.bio_chatgpt.remove(fragment_id)
