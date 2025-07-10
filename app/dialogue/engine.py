@@ -1,9 +1,9 @@
 import uuid
 from openai import OpenAI
 from app.config import OPENAI_API_KEY, OPENAI_MODEL
-from app.memory.context import ContextManager
-from app.models.souvenir import Souvenir
-from app.memory.db import enregistrer_souvenir
+from app.models import ContextManager
+from app.models import Souvenir
+from app.memory.crud import enregistrer_souvenir
 from typing import Optional
 from app.utils.logger import logger  # Import du logger
 

@@ -1,6 +1,6 @@
 # app/memory/crud.py
 
-from app.memory.models import Souvenir
+from app.models import Souvenir
 from app.memory.db import get_session
 from typing import List
 from sqlmodel import select
@@ -16,3 +16,6 @@ def chercher_souvenirs(limit: int = 10) -> List[Souvenir]:
     with get_session() as session:
         statement = select(Souvenir).order_by(Souvenir.timestamp.desc()).limit(limit)
         return list(session.exec(statement))
+
+def enregistrer_souvenir(souvenir: Souvenir):
+    pass

@@ -2,8 +2,8 @@
 
 from typing import List
 from app.context.bio_manager import Bio
-from app.memory.db import chercher_souvenirs
-from app.models.souvenir import Souvenir
+from app.memory.crud import chercher_souvenirs
+from app.models import Souvenir
 from openai.types.chat import ChatCompletionMessageParam
 
 
