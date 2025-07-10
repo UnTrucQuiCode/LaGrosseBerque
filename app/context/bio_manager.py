@@ -1,7 +1,7 @@
 # app/context/bio_manager.py
 
 from typing import List, Dict
-from app.memory.db import chercher_souvenirs
+from app.memory.memory import chercher_souvenirs
 from app.models.souvenir import Souvenir
 
 class Bio:
