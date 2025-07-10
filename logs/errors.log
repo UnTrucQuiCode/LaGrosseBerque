@@ -6,3 +6,12 @@
 2025-07-09 16:45:58,593 | ERROR | Erreur lors de la génération de réponse : Error code: 404 - {'error': {'message': 'The model `gpt-4` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}
 2025-07-09 16:48:24,002 | ERROR | Erreur lors de la génération de réponse : Error code: 404 - {'error': {'message': 'The model `gpt-4` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}
 2025-07-09 16:48:46,882 | ERROR | Erreur lors de la génération de réponse : Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+2025-07-10 21:14:28,447 | ERROR | Erreur lors de la génération de réponse : (sqlite3.OperationalError) no such table: souvenir
+[SQL: SELECT souvenir.id, souvenir.type, souvenir.contenu, souvenir.timestamp, souvenir.poids, souvenir.tags 
+FROM souvenir ORDER BY souvenir.timestamp DESC
+ LIMIT ? OFFSET ?]
+[parameters: (10, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 21:25:13,835 | ERROR | Erreur lors de la génération de réponse : Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+2025-07-10 21:27:39,547 | ERROR | Erreur lors de la génération de réponse : Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+2025-07-10 21:27:54,987 | ERROR | Erreur lors de la génération de réponse : Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
