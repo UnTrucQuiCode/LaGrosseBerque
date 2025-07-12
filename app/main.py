@@ -4,9 +4,17 @@ from app.dialogue.router import dialogue_router
 from app.dialogue.souvenirs_router import router as souvenirs_router
 from sqlmodel import SQLModel
 from app.memory.db import engine
-
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Arch.Noesis")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4200"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 """
 if __name__ == "__main__":
