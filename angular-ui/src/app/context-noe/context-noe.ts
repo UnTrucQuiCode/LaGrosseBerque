@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-context-noe',
+  standalone: true,
   imports: [],
   templateUrl: './context-noe.html',
-  styleUrl: './context-noe.scss'
+  styleUrls: ['./context-noe.scss']
 })
 export class ContextNoe {
 
