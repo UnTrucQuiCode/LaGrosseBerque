@@ -4,8 +4,9 @@ import {SearchEngine} from './search-engine/search-engine';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
+  standalone:true,
+  imports: [RouterOutlet, SearchEngine],
+  templateUrl: './search-engine/search-engine.html',
   styleUrl: './app.scss'
 })
 export class App {
