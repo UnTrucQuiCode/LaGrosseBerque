@@ -8,8 +8,8 @@ import {ResponseForm} from './response-form/response-form';
   selector: 'app-root',
   standalone:true,
   imports: [RouterOutlet, SearchEngine, ContextNoe, ResponseForm],
-  templateUrl: './search-engine/search-engine.html',
-  styleUrl: './app.scss'
+  templateUrl: './app.html',
+  styleUrls: ['./app.scss']
 })
 export class App {
   protected readonly title = signal('angular-ui');
