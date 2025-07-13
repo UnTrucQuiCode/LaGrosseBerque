@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-response-form',
   imports: [],
   templateUrl: './response-form.html',
-  styleUrl: './response-form.css'
+  styleUrl: './response-form.scss'
 })
 export class ResponseForm {
 

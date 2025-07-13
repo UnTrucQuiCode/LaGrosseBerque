@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-context-noe',
   imports: [],
   templateUrl: './context-noe.html',
-  styleUrl: './context-noe.css'
+  styleUrl: './context-noe.scss'
 })
 export class ContextNoe {
 
