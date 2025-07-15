@@ -37,7 +37,12 @@
         sauvegarder la liste des Id des contextes utilisés par message pour voir à quoi Noe pensait au moment de sa réponse. 
         Les miens aussi peuvent être utiles.  
         -->
-        <markdown [data]="monTexteMarkdown"></markdown>
+        <markdown
+        [data]="monTexteMarkdown"
+        (ready)="onReady()"
+        [disableSanitizer]="true">
+        </markdown>
+
     </div>
     <form>
         <div class="formDiv">
