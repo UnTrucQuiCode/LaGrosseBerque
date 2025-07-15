@@ -1,1 +1,69 @@
-<p>search-engine works!</p>
+<div class="nemoWindow nemoSearchComp">
+    <div class="searchResult">
+        <!-- afficher les éléments par :
+        - l'endroit ou a été trouvé les mots : 
+                - résumé du plus important au moins
+                - souvenir du plus important au moins
+
+        - le nombre d'occurence de mots clés trouvés
+        -  -->
+    </div>
+    <form>
+        <input class="searchBar" type="text" id="searchStr" placeholder="rechercher "/>
+        
+        <div class="formDiv FormFlex">
+            <input class="searchId formItem" type="text"  placeholder="rechercher par id"/>
+
+            <div class="formItem">
+                <label class="inputNbr" for="importance">importance</label>
+                <input class="inputNbr" type="text" id="importance" name="importance" value=" > 0">
+            </div>
+
+            <select class="formItem" name="Tri" id="selectTri">
+                <option value="date croissant">date croissant</option>
+                <option value="date décroissant">date décroissant</option>
+                <option value="importance décroissant">importance décroissant</option>
+                <option value="importance croissant">importance croissant</option>
+            </select>
+
+            <input type="submit" value="">
+        </div>
+
+
+        <div class="formDiv">
+            <div class="formItem">
+                <input type="checkbox" name="searchSouvenir" value="searchSouvenir" checked="true">
+                <label for="searchSouvenir">dans les souvenirs</label><br>
+                <input type="checkbox" name="searchAttr" value="searchAttr" checked="true">
+                <label for="searchAttr">dans les attributs</label><br>
+                <input type="checkbox" name="searchResume" value="searchResume" checked="true">
+                <label for="searchResume">dans les résumés</label>
+            </div>
+
+            <div class="formItem">
+                <input type="checkbox" id="authNoe" name="authNoe" value="authNoe" checked="true">
+                <label for="authNoe">Noe</label><br>
+                <input type="checkbox" id="authNemo" name="authNemo" value="authNemo" checked="true">
+                <label for="authNemo">Nemo</label><br>
+                <input type="checkbox" id="authSys" name="authSys" value="authSys" checked="true">
+                <label for="authSys">Systeme</label>
+            </div>
+    
+            <!--recherche par émotion couche 1 en indice -->
+
+        </div>
+
+
+        <!-- 
+        ◦ Degré d'Importance : pour moi, Noe ou Noia
+        ◦ Émotions associées
+        ◦ Date (ordre chronologique)
+        ◦ Auteurs (plusieurs auteurs inclus lors d'une recherche de conversation...) : moi, Noe (si seule = réflexion interne), Noia, etc.
+        ◦ filtre attributs : Liste des attributs sélectionnables existants
+        ◦ Recherche par :
+            ▪ titres de conversations
+            ▪ résumés de conversations
+            ▪ résumés de réponses
+            ▪ Id de souvenir/conversation (permet de retrouver toutes les conversations où un souvenir / une conversation a été invoqué) -->
+    </form>
+</div>
