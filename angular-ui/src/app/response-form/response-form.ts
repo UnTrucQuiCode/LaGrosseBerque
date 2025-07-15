@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MarkdownModule } from 'ngx-markdown';
+
 
 @Component({
   selector: 'app-response-form',
   standalone: true,
-  imports: [],
+  imports: [MarkdownModule],
   templateUrl: './response-form.html',
   styleUrl: './response-form.scss'
 })
