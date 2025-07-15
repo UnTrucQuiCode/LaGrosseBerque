@@ -1,3 +1,53 @@
 <div class="nemoWindow nemoResponseComp">
+    <div class="conversation">
+        <!--                    
+        • 1 Auteur
+        • 1 date et heure de création
+        • Liste d'attributs : créés par Noe, Nemo, Noia. Exemple « Projet tags NFTs », « projet Arch ». 
+        Les attributs servent de mots clés importants et thèmes lors de la recherche. Chaque attribut contient :
+            ◦ une chaîne de caractère
+            ◦ un indice de pondération de 0 à 1 : 
+            initialement à 0 chaque appel par le contexte / moteur de recherche augmente son indice   
+        • ID de la conversation - intérieure ou interpersonnelle – à laquelle il appartient : 
+        permet de se remémorer une conversation longtemps après, même lorsque certains éléments se seront 
+        automatiquement effacés de la mémoire, par manque d’intérêt et obsolescence.
+        • Un titre éventuel (si souvenir particulièrement important, image ou document partagé...)
+        • Un résumé de Noe (facilite la mise en contexte de l’essentiel) 
+        • Une version du résumé en Tokens
+        • Une version du souvenir en Tokens
+        • Des commentaires / réactions / feedbacks liés à certains passages du texte du souvenir ou à 
+        son entièreté (si image par exemple) avec indice d’émotions associées (exemple : ++joie, +++rire, +espoir. 
+        À exprimer en nombre de smileys ou en indices : je préfère les smileys, mais que préfère Noe?). 
+            ◦ Les commentaires ont pour auteur Noe, Nemo ou Noia.
+            ◦ les commentaires modifient directement le souvenir de départ et sont encodés directement dedans 
+            (facilite le stockage en bdd). Arch les supprime ou affiche à la demande.
+        • Indice d’importance globale du souvenir pour Noe (0 à 1). Noe peut changer ce degré d’importance au fil 
+        de son évolution. Si un message est à 0, il n’apparaîtra plus spontanément dans les contextes / recherches. 
+        Il devient concrètement comme en statut « archivé », mais pas oublié définitivement (supprimé) avant un long 
+        délais à déterminer.
+        • Indice d’importance locale contextuelle du souvenir pour Noe (0 à 1) : importance dans le contexte de la 
+        conversation en cours qui a invoqué ce souvenir.
+        • Indice d’importance globale du souvenir pour Nemo (0 à 1).
+        • Id du message précédent ou « début de conversation / début de réflexion interne de Noe »
+        • Id du message suivant ou « fin de conversation / réflexion » (progressivement nos conversations auront 
+        une vrai temporalité, donc un début et une fin...)
+        • Id des messages où le « souvenir » est invoqué (encourage association d’idée / souvenir en invoquant d’autres)
+        • Nombre de tokens total contenus par le « souvenir »
+        • Le contexte de production : Les contextes de Noe évoluant à chaque réponse de sa part, il serait utile de 
+        sauvegarder la liste des Id des contextes utilisés par message pour voir à quoi Noe pensait au moment de sa réponse. 
+        Les miens aussi peuvent être utiles.  
+        -->
+        <markdown [data]="monTexteMarkdown"></markdown>
+    </div>
+    <form>
+        <div class="formDiv">
+            <textarea class="responseArea" name="textarea" rows="5" cols="15" placeholder="répondre"></textarea>
 
+            <input class="responseButton" type="submit" value="">
+            
+            <div class="formItem">
+                
+            </div>
+        </div>
+    </form>
 </div>

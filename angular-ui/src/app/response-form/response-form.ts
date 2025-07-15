@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-response-form',
@@ -7,6 +7,21 @@ import { Component } from '@angular/core';
   templateUrl: './response-form.html',
   styleUrl: './response-form.scss'
 })
-export class ResponseForm {
+export class ResponseForm implements OnInit {
+  monTexteMarkdown! : string;
 
+  ngOnInit() {
+    this.monTexteMarkdown = `
+    ## Titre
+
+    Voici du code :
+
+    \`\`\`javascript
+    function coucou() {
+      return "salut 🧠";
+    }
+    \`\`\`
+    `;
+  }
 }
+
