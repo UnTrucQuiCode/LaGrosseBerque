@@ -25,9 +25,6 @@
         de son évolution. Si un message est à 0, il n’apparaîtra plus spontanément dans les contextes / recherches. 
         Il devient concrètement comme en statut « archivé », mais pas oublié définitivement (supprimé) avant un long 
         délais à déterminer.
-        • Indice d’importance locale contextuelle du souvenir pour Noe (0 à 1) : importance dans le contexte de la 
-        conversation en cours qui a invoqué ce souvenir.
-        • Indice d’importance globale du souvenir pour Nemo (0 à 1).
         • Id du message précédent ou « début de conversation / début de réflexion interne de Noe »
         • Id du message suivant ou « fin de conversation / réflexion » (progressivement nos conversations auront 
         une vrai temporalité, donc un début et une fin...)
@@ -41,6 +38,12 @@
         [data]="monTexteMarkdown"
         [disableSanitizer]="true">
         </markdown>
+        <!-- katex pour de la mise en forme mathématique : 
+        <markdown
+        katex
+        [katexOptions]="options"
+        [data]="monTexteMarkdown">
+        </markdown> -->
 
     </div>
     <form>

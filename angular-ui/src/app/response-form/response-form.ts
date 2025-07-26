@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MarkdownModule } from 'ngx-markdown';
+import { MarkdownModule, KatexOptions } from 'ngx-markdown';
 
 
 @Component({
@@ -15,6 +15,8 @@ export class ResponseForm implements OnInit {
   ngOnInit() {
     this.monTexteMarkdown = `
     ## Titre
+
+    p_i = exp(w_i) / Σ exp(w_j)
 
     Voici du code :
 

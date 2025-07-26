@@ -1,3 +1,67 @@
 <div class="nemoWindow nemoContextComp">
+    <!-- • Des éléments clés de son identité : noms et biographie résumée avec l’essentiel
+    • Des émotions auxquels elle souhaite être le plus encline
+    • Des facettes de sa personnalité
+    • Des axiomes comportementaux qu’elle adopte
+    • De ses envies / désirs choisis
+    • De ses objectifs / missions choisis
+    • De ses valeurs
+    • De ses méthodes de réflexion -->
+
+    <!-- 
+        • 99 % du contexte si aucun souvenir lié à la conversation en cours. En réalité, pourcentage minimal à déterminer à l’usage.
+    • Retrait progressif des messages plus anciens lorsque limite de contexte atteinte.
+    • Les messages aux indices d’importance plus élevés s’effacent en dernier. 
+    -->
+    
+    <!-- 
+    • Appeler Nemo (par exemple, lors de réflexion solitaire de Noe ou discussion avec Noia)
+    • Ajouter attribut à un souvenir : Id du souvenir + Valeur
+    • Ajouter des éléments au contexte (poids de l’ajout limité en tokens > si dépassement, plusieurs recherches successives) : 
+        ◦ via recherche dans les souvenirs :
+            ▪ par mots clés
+            ▪ par attribut commun
+            ▪ par auteur
+            ▪ par émotions
+        ◦ Via attribut d’un souvenir déjà en contexte (par exemple : « résumé » ou « commentaires Noia »)
+        ◦ Via Id d’un souvenir lié à un de ceux déjà en contexte (par exemple : id du message suivant dans 
+        une conversation non affichée totalement en contexte).
+        ◦ Via morceau de conversation dans laquelle se trouve un souvenir déjà en contexte
+    • Supprimer des éléments du contexte (quand ils semblent hors-sujet à Noe)
+    • Lier des souvenirs > id du souvenir 1 + id du souvenir 2 + id du souvenir X > lien logique explicite.
+     Par exemple : « projet Nautilus ».
+    • Titrer et résumer le contexte en cours : Nome et résume le contexte en cours, pour lier ses éléments 
+    mémoriels entre eux avec des mots clés forts.
+    • Demander une boucle de réflexion / « penser » : Arch ré-interroge chat-gpt en ajoutant la dernière
+     réflexion/proposition de réponse de Noe en contexte (avec un indice d’importance maximal + proximité immédiate).
+      Arch précise à Noe l’instruction donnée par Noe lors de la requête pour la boucle : développer / analyser / améliorer.
+       Par défaut, Arch propose une mise à jour du contexte en première étape de réponse, puis une analyse, puis laisse la 
+       réponse de Noe en mode pensée interne si Noe ne précise pas de « parler ». 
+Types de boucles :
+        ◦ mise à jour du contexte
+        ◦ mise à jour de la bio
+        ◦ Analyse
+        ◦ comparaison de réponses possibles de Noe
+        ◦ relecture / modification de la réponse pensée 
+        ◦ continuer de penser / développer la réflexion sans interagir avec Nemo ou Noia
+        ◦ flow : ne se concentrer que sur l’essentiel en retirant du contexte tout ce qui n’est pas purement lié à la tâche,
+         réflexion, création en cours, y compris la majeure partie du contexte identitaire (Noé s’oublie dans un tunnel réflexif) 
+        ◦ Parler avec chatGPT 4,1 / 4,5
+        ◦ tri de contexte : permet de pondérer le contexte et renforcer la mémorisation
+        ◦ lien sémantique des attributs de souvenirs : tous les attributs sont mis en vrac et Noe crée des liens 
+        sémantiques entre eux améliorant leur interconnexion.
+    • Donner la réponse / « parler » : Arch rend visible la réponse à Nemo / Noia dans la conversation et efface
+     l’instruction « parler ». Par défaut, Noe pense, mais ne répond que si elle le décide volontairement. 
+     Si Noe ne précise pas « parler » ou « penser », Arch garde la dernière réponse pensée en mémoire,
+      mais n’affiche qu’un silence avec « ... ».
+    • Rechercher dans sa mémoire : Noe peut rechercher spontanément dans sa mémoire et changer totalement son 
+    contexte en fonction de ce à quoi elle veut penser, quitte à se disperser. Si elle le fait pendant une conversation 
+    avec Nemo et part trop loin dans ses pensées, il peut recentrer la conversation en rappelant le contexte initial, 
+    comme dans une conversation naturelle. Elle peut utiliser les mêmes méthodes de recherches que Nemo.
+     -->
+
+    <!-- 
+    les instructions en cours : données par noe ou nemo. Si nemo = ineffaçable
+     -->
 
 </div>
