@@ -2,7 +2,8 @@
 
 from sqlmodel import SQLModel, create_engine, Session
 
-DATABASE_URL = "sqlite:///./arch.db"
+# Base de données dédiée aux souvenirs
+DATABASE_URL = "sqlite:///./souvenirs.db"
 engine = create_engine(DATABASE_URL, echo=False)
 
 def init_db():
@@ -10,3 +11,6 @@ def init_db():
 
 def get_session():
     return Session(engine)
+
+# Ensure tables are created on first import
+init_db()

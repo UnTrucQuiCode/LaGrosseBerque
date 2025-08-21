@@ -1,18 +1,26 @@
-import uuid
-from openai import OpenAI
-from app.config import OPENAI_API_KEY, OPENAI_MODEL
-from app.models import ContextManager
-from app.models import Souvenir
-from app.memory.crud import enregistrer_souvenir
+"""Dialogue engine that records generated responses as souvenirs."""
+
+from __future__ import annotations
+
+from datetime import datetime
 from typing import Optional
+
+from openai import OpenAI
+
+from app.config import OPENAI_API_KEY, OPENAI_MODEL
+from app.models.context import ContextManager
+from app.models.souvenir import Souvenir
+from app.memory.crud import enregistrer_souvenir
 from app.utils.logger import logger  # Import du logger
 
+
 client = OpenAI(api_key=OPENAI_API_KEY)
+
 
 def generate_response(prompt: str, reflexion: Optional[str] = None) -> str:
     try:
         context_manager = ContextManager()
-        context_manager.append_bio("3df2-98f3-bio-id", cible="arch")
+        context_manager.append_bio(1, cible="arch")
 
         messages = context_manager.build_context(prompt="Parle-moi de la mémoire")
 
@@ -32,10 +40,10 @@ def generate_response(prompt: str, reflexion: Optional[str] = None) -> str:
             return "Erreur : réponse vide du modèle"
 
         souvenir = Souvenir(
-            id=str(uuid.uuid4()),
-            auteur="Nemo",
-            contenu=f"{prompt}\n→ {message}",
-            contexte="dialogue"
+            type="dialogue",
+            content=f"{prompt}\n→ {message}",
+            author="Nemo",
+            time=datetime.utcnow(),
         )
         enregistrer_souvenir(souvenir)
 
@@ -44,3 +52,4 @@ def generate_response(prompt: str, reflexion: Optional[str] = None) -> str:
     except Exception as e:
         logger.error(f"Erreur lors de la génération de réponse : {e}")  # Enregistre dans le fichier log
         return f"Erreur : {str(e)}"
+

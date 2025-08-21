@@ -1,26 +1,38 @@
-from sqlmodel import SQLModel, Field, Column
-from sqlalchemy.types import TEXT
-from uuid import UUID, uuid4
-from datetime import datetime, timezone
-from typing import List
-import json
+"""Model definition for souvenirs stored in the database."""
 
-# --- Fonctions de sérialisation/désérialisation des tags ---
+from __future__ import annotations
 
-def serialize_tags(tags: List[str]) -> str:
-    """
-    Convertit une liste de tags en chaîne JSON pour stockage en base.
-    """
-    return json.dumps(tags)
+from datetime import datetime
+from typing import Optional
 
-def deserialize_tags(value: str) -> List[str]:
-    """
-    Convertit une chaîne JSON depuis la base en liste Python.
-    """
-    return json.loads(value)
+from sqlmodel import Field, SQLModel
 
-# --- Modèle principal : Souvenir ---
 
 class Souvenir(SQLModel, table=True):
-    
-    
+    """Representation d'un souvenir.
+
+    Cette table est créée automatiquement si elle n'existe pas déjà
+    grâce à :func:`sqlmodel.SQLModel.metadata.create_all`.
+    """
+
+    mem_id: Optional[int] = Field(default=None, primary_key=True)
+    type: str
+    content: str
+    author: str
+    time: datetime = Field(default_factory=datetime.utcnow)
+    weight: int = 0
+    summary: str = ""
+    emotions: str = ""
+    tokens_content: int = 0
+    tokens_summary: int = 0
+    joy: int = 0
+    trust: int = 0
+    fear: int = 0
+    surprise: int = 0
+    sadness: int = 0
+    digust: int = 0  # typo volontaire conservé pour correspondre au schéma fourni
+    anger: int = 0
+    anticipation: int = 0
+    activation_log: str = ""
+    last_accessed: Optional[datetime] = None
+
