@@ -1,18 +1,18 @@
 
-"""
-memory_weight.py
+# """
+# memory_weight.py
 
-Utility functions and a small class to manage dynamic importance scores (weights)
-for conversation memories / souvenirs.
+# Utility functions and a small class to manage dynamic importance scores (weights)
+# for conversation memories / souvenirs.
 
-Key ideas implemented:
-- Softmax probability calculation for a set of weights.
-- Temporal decay of weights:   w *= exp(-λ * Δt)
-- Reinforcement on usage:      w += α * (1 - p_i)
-- Pairwise comparison update via Elo ranking.
+# Key ideas implemented:
+# - Softmax probability calculation for a set of weights.
+# - Temporal decay of weights:   w *= exp(-λ * Δt)
+# - Reinforcement on usage:      w += α * (1 - p_i)
+# - Pairwise comparison update via Elo ranking.
 
-Author: Noesis (generated for Nemo)
-"""
+# Author: Noesis (generated for Nemo)
+# """
 
 from __future__ import annotations
 from dataclasses import dataclass, field
@@ -23,7 +23,7 @@ from typing import Iterable, Dict
 
 @dataclass
 class MemoryItem:
-    """Represents a memory with a dynamic weight `w`."""
+    # """Represents a memory with a dynamic weight `w`."""
     text: str
     w: float = 0.0
     created: datetime = field(default_factory=datetime.utcnow)
