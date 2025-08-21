@@ -1,2 +1,6 @@
+"""Simplified exports for model package."""
+
 from .souvenir import Souvenir
-from .context import ContextManager
+
+__all__ = ["Souvenir"]
+

@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.models import Souvenir
+from app.models.souvenir import Souvenir
 from app.memory.crud import creer_souvenir
 
 router = APIRouter(prefix="/souvenirs", tags=["Souvenirs"])
