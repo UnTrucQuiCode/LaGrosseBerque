@@ -1,6 +1,6 @@
 """Simplified exports for model package."""
 
-from .souvenir import Souvenir
+from .souvenir import Link, LinkSouvenir, Souvenir
 
-__all__ = ["Souvenir"]
+__all__ = ["Souvenir", "Link", "LinkSouvenir"]
 

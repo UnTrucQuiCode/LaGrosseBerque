@@ -40,3 +40,21 @@ class Souvenir(SQLModel, table=True):
     activation_log: str = ""
     last_accessed: Optional[datetime] = None
 
+
+class Link(SQLModel, table=True):
+    """Description d'un lien mémorisable."""
+
+    link_id: Optional[int] = Field(default=None, primary_key=True)
+    type: str
+    name: str
+    description: str
+    weight: int
+    total_token: int
+
+
+class LinkSouvenir(SQLModel, table=True):
+    """Table d'association entre :class:`Souvenir` et :class:`Link`."""
+
+    mem_id: int = Field(foreign_key="souvenir.mem_id", primary_key=True)
+    link_id: int = Field(foreign_key="link.link_id", primary_key=True)
+
