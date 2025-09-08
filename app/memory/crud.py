@@ -1,4 +1,4 @@
-"""CRUD operations for :class:`Souvenir` objects."""
+"""CRUD operations for memory models."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from typing import Dict, List, Optional
 
 from sqlmodel import select
 
-from app.models.souvenir import Souvenir
+from app.models.souvenir import Link, LinkSouvenir, Souvenir
 from app.memory.db import get_session
 
 
@@ -60,4 +60,87 @@ def supprimer_souvenir(mem_id: int) -> bool:
 def enregistrer_souvenir(souvenir: Souvenir) -> Souvenir:
     """Convenience wrapper for :func:`creer_souvenir`."""
     return creer_souvenir(souvenir)
+
+
+# ----- CRUD pour les liens -----
+
+def creer_link(link: Link) -> Link:
+    """Persiste un nouveau :class:`Link` dans la base."""
+    with get_session() as session:
+        session.add(link)
+        session.commit()
+        session.refresh(link)
+        return link
+
+
+def obtenir_link(link_id: int) -> Optional[Link]:
+    """Récupère un lien par son identifiant."""
+    with get_session() as session:
+        return session.get(Link, link_id)
+
+
+def chercher_links(limit: int = 10) -> List[Link]:
+    """Retourne une liste de liens classés par id."""
+    with get_session() as session:
+        statement = select(Link).order_by(Link.link_id).limit(limit)
+        return list(session.exec(statement))
+
+
+def mettre_a_jour_link(link_id: int, data: Dict) -> Optional[Link]:
+    """Met à jour les champs d'un lien existant."""
+    with get_session() as session:
+        link = session.get(Link, link_id)
+        if not link:
+            return None
+        for key, value in data.items():
+            setattr(link, key, value)
+        session.add(link)
+        session.commit()
+        session.refresh(link)
+        return link
+
+
+def supprimer_link(link_id: int) -> bool:
+    """Supprime un lien de la base."""
+    with get_session() as session:
+        link = session.get(Link, link_id)
+        if not link:
+            return False
+        session.delete(link)
+        session.commit()
+        return True
+
+
+# ----- Gestion des associations lien-souvenir -----
+
+def associer_link_souvenir(mem_id: int, link_id: int) -> LinkSouvenir:
+    """Crée une association entre un souvenir et un lien."""
+    with get_session() as session:
+        association = LinkSouvenir(mem_id=mem_id, link_id=link_id)
+        session.add(association)
+        session.commit()
+        session.refresh(association)
+        return association
+
+
+def supprimer_association_link_souvenir(mem_id: int, link_id: int) -> bool:
+    """Supprime l'association entre un souvenir et un lien."""
+    with get_session() as session:
+        association = session.get(LinkSouvenir, (mem_id, link_id))
+        if not association:
+            return False
+        session.delete(association)
+        session.commit()
+        return True
+
+
+def obtenir_links_pour_souvenir(mem_id: int) -> List[Link]:
+    """Retourne tous les liens associés à un souvenir donné."""
+    with get_session() as session:
+        statement = (
+            select(Link)
+            .join(LinkSouvenir, Link.link_id == LinkSouvenir.link_id)
+            .where(LinkSouvenir.mem_id == mem_id)
+        )
+        return list(session.exec(statement))
 
