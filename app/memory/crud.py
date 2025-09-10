@@ -6,7 +6,7 @@ from typing import Dict, List, Optional
 
 from sqlmodel import select
 
-from app.models.souvenir import Link, LinkSouvenir, Souvenir
+from app.models.souvenir import EmoLvl2ToLv1, Link, LinkSouvenir, Souvenir
 from app.memory.db import get_session
 
 
@@ -60,6 +60,57 @@ def supprimer_souvenir(mem_id: int) -> bool:
 def enregistrer_souvenir(souvenir: Souvenir) -> Souvenir:
     """Convenience wrapper for :func:`creer_souvenir`."""
     return creer_souvenir(souvenir)
+
+
+# ----- CRUD pour la table emo_lvl2_to_lv1 -----
+
+def creer_emo_lvl2_to_lv1(mapping: EmoLvl2ToLv1) -> EmoLvl2ToLv1:
+    """Persiste une nouvelle correspondance d'émotion de niveau 2."""
+    with get_session() as session:
+        session.add(mapping)
+        session.commit()
+        session.refresh(mapping)
+        return mapping
+
+
+def obtenir_emo_lvl2_to_lv1(emo_lvl2: str) -> Optional[EmoLvl2ToLv1]:
+    """Récupère une correspondance par son nom de niveau 2."""
+    with get_session() as session:
+        return session.get(EmoLvl2ToLv1, emo_lvl2)
+
+
+def chercher_emo_lvl2_to_lv1(limit: int = 10) -> List[EmoLvl2ToLv1]:
+    """Retourne une liste de correspondances ordonnées par nom."""
+    with get_session() as session:
+        statement = select(EmoLvl2ToLv1).order_by(EmoLvl2ToLv1.emo_lvl2).limit(limit)
+        return list(session.exec(statement))
+
+
+def mettre_a_jour_emo_lvl2_to_lv1(
+    emo_lvl2: str, data: Dict
+) -> Optional[EmoLvl2ToLv1]:
+    """Met à jour les champs d'une correspondance existante."""
+    with get_session() as session:
+        mapping = session.get(EmoLvl2ToLv1, emo_lvl2)
+        if not mapping:
+            return None
+        for key, value in data.items():
+            setattr(mapping, key, value)
+        session.add(mapping)
+        session.commit()
+        session.refresh(mapping)
+        return mapping
+
+
+def supprimer_emo_lvl2_to_lv1(emo_lvl2: str) -> bool:
+    """Supprime une correspondance de la base."""
+    with get_session() as session:
+        mapping = session.get(EmoLvl2ToLv1, emo_lvl2)
+        if not mapping:
+            return False
+        session.delete(mapping)
+        session.commit()
+        return True
 
 
 # ----- CRUD pour les liens -----
