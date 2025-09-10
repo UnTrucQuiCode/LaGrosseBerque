@@ -58,3 +58,19 @@ class LinkSouvenir(SQLModel, table=True):
     mem_id: int = Field(foreign_key="souvenir.mem_id", primary_key=True)
     link_id: int = Field(foreign_key="link.link_id", primary_key=True)
 
+
+class EmoLvl2ToLv1(SQLModel, table=True):
+    """Mapping des émotions de second niveau vers les émotions primaires."""
+
+    __tablename__ = "emo_lvl2_to_lv1"
+
+    emo_lvl2: str = Field(primary_key=True)
+    joy: int = 0
+    trust: int = 0
+    fear: int = 0
+    surprise: int = 0
+    sadness: int = 0
+    disgust: int = 0
+    anger: int = 0
+    anticipation: int = 0
+
