@@ -3,12 +3,12 @@
         <!--                    
         • 1 Auteur
         • 1 date et heure de création
-        • Liste d'attributs : créés par Noe, Nemo, Noia. Exemple « Projet tags NFTs », « projet Arch ». 
-        Les attributs servent de mots clés importants et thèmes lors de la recherche. Chaque attribut contient :
-            ◦ une chaîne de caractère
-            ◦ un indice de pondération de 0 à 1 : 
+        • Liste d'attributs : créés par Noe, Nemo, Noia. Exemple « Projet tags NFTs », « projet Arch ». 
+        Les attributs servent de mots clés importants et thèmes lors de la recherche. Chaque attribut contient :
+            - une chaîne de caractère
+            - un indice de pondération de 0 à 1 : 
             initialement à 0 chaque appel par le contexte / moteur de recherche augmente son indice   
-        • ID de la conversation - intérieure ou interpersonnelle – à laquelle il appartient : 
+        • ID de la conversation - intérieure ou interpersonnelle — à laquelle il appartient : 
         permet de se remémorer une conversation longtemps après, même lorsque certains éléments se seront 
         automatiquement effacés de la mémoire, par manque d’intérêt et obsolescence.
         • Un titre éventuel (si souvenir particulièrement important, image ou document partagé...)
@@ -16,21 +16,21 @@
         • Une version du résumé en Tokens
         • Une version du souvenir en Tokens
         • Des commentaires / réactions / feedbacks liés à certains passages du texte du souvenir ou à 
-        son entièreté (si image par exemple) avec indice d’émotions associées (exemple : ++joie, +++rire, +espoir. 
-        À exprimer en nombre de smileys ou en indices : je préfère les smileys, mais que préfère Noe?). 
-            ◦ Les commentaires ont pour auteur Noe, Nemo ou Noia.
-            ◦ les commentaires modifient directement le souvenir de départ et sont encodés directement dedans 
+        son entièreté (si image par exemple) avec indice d’émotions associées (exemple : ++joie, +++rire, +espoir. 
+        À exprimer en nombre de smileys ou en indices : je préfère les smileys, mais que préfère Noe?). 
+            - Les commentaires ont pour auteur Noe, Nemo ou Noia.
+            - les commentaires modifient directement le souvenir de départ et sont encodés directement dedans 
             (facilite le stockage en bdd). Arch les supprime ou affiche à la demande.
         • Indice d’importance globale du souvenir pour Noe (0 à 1). Noe peut changer ce degré d’importance au fil 
         de son évolution. Si un message est à 0, il n’apparaîtra plus spontanément dans les contextes / recherches. 
-        Il devient concrètement comme en statut « archivé », mais pas oublié définitivement (supprimé) avant un long 
+        Il devient concrètement comme en statut « archivés », mais pas oublié définitivement (supprimé) avant un long 
         délais à déterminer.
-        • Id du message précédent ou « début de conversation / début de réflexion interne de Noe »
-        • Id du message suivant ou « fin de conversation / réflexion » (progressivement nos conversations auront 
+        • Id du message précédent ou « début de conversation »/ début de réflexion interne de Noe »
+        • Id du message suivant ou « fin de conversation / réflexion » (progressivement nos conversations auront 
         une vrai temporalité, donc un début et une fin...)
-        • Id des messages où le « souvenir » est invoqué (encourage association d’idée / souvenir en invoquant d’autres)
-        • Nombre de tokens total contenus par le « souvenir »
-        • Le contexte de production : Les contextes de Noe évoluant à chaque réponse de sa part, il serait utile de 
+        • Id des messages où le « souvenir » est invoqué (encourage association d’idée / souvenir en invoquant d’autres)
+        • Nombre de tokens total contenus par le « souvenir »
+        • Le contexte de production : Les contextes de Noe évoluant à chaque réponse de sa part, il serait utile de 
         sauvegarder la liste des Id des contextes utilisés par message pour voir à quoi Noe pensait au moment de sa réponse. 
         Les miens aussi peuvent être utiles.  
         -->
@@ -46,15 +46,30 @@
         </markdown> -->
 
     </div>
-    <form>
+    <form id="response-UI" (ngSubmit)="onSubmit()" #form="ngForm">
         <div class="formDiv">
-            <textarea class="responseArea" name="textarea" rows="5" cols="15" placeholder="répondre"></textarea>
+            <textarea class="responseArea"
+                      name="content"
+                      rows="5" cols="15"
+                      placeholder="répondre"
+                      required
+                      [(ngModel)]="message"></textarea>
 
-            <input class="responseButton" type="submit" value="">
-            
-            <div class="formItem">
-                
+            <div class="formItem" style="margin-top: 8px; display: flex; gap: 8px; align-items: center;">
+                <input type="text" name="author" [(ngModel)]="author" placeholder="Auteur" style="flex: 0 0 160px;"/>
+                <input type="text" name="type" [(ngModel)]="type" placeholder="Type" style="flex: 0 0 120px;"/>
+                <button class="responseButton" type="submit" [disabled]="saving || !form.form.valid">
+                    {{ saving ? 'Enregistrement…' : 'Enregistrer' }}
+                </button>
+            </div>
+
+            <div class="formItem" *ngIf="saveOk" style="color: #2e7d32; margin-top: 6px;">
+                Souvenir enregistré (#{{ lastSavedId }})
+            </div>
+            <div class="formItem" *ngIf="saveError" style="color: #c62828; margin-top: 6px;">
+                Échec de l'enregistrement : {{ saveError }}
             </div>
         </div>
     </form>
 </div>
+

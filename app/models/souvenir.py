@@ -17,16 +17,17 @@ class Souvenir(SQLModel, table=True):
 
     mem_id: Optional[int] = Field(default=None, primary_key=True)
     type: str
-    summary: str = ""
+    summary: Optional[str] = None
     content: str
-    content_complete: str
+    content_complete: Optional[str] = None
     author: str
     time: datetime = Field(default_factory=datetime.utcnow)
-    weight: int = 0
-    importance: int
-    Log_context: str
-    part_of: int
-    emotions: str = ""
+    weight: int = 0.1
+    importance: int = 0.01
+    Log_context: Optional[str] = None
+    part_of: Optional[int] = None
+    emotions: Optional[str] = None
+    emotions_weight: int = 0
     tokens_content: int = 0
     tokens_summary: int = 0
     joy: int = 0
@@ -37,7 +38,7 @@ class Souvenir(SQLModel, table=True):
     disgust: int = 0  
     anger: int = 0
     anticipation: int = 0
-    activation_log: str = ""
+    activation_log: Optional[str] = None
     last_accessed: Optional[datetime] = None
 
 
