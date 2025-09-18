@@ -6,7 +6,17 @@ from typing import Dict, List, Optional
 
 from sqlmodel import select
 
-from app.models.memory import EmoLvl2ToLv1, Link, LinkSouvenir, Souvenir
+from app.models.memory import (
+    BackgroundThought,
+    Context,
+    EmoLvl2ToLv1,
+    Fragment,
+    Link,
+    LinkSouvenir,
+    Souvenir,
+    User,
+    WorkingMemory,
+)
 from app.models.user import User
 from app.memory.db import get_session
 
