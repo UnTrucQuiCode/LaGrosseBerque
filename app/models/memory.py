@@ -20,13 +20,13 @@ class Souvenir(SQLModel, table=True):
     souv_id: Optional[int] = Field(default=None, primary_key=True)
     type: str
     content: str
-    full_content: str """ content + comments and emotions of Noe & Nemo """
+    full_content: str # content + comments and emotions of Noe & Nemo
     summary: Optional[str] = None
     user_id: int = Field(foreign_key="user.user_id", primary_key=True)
     time: datetime = Field(default_factory=datetime.utcnow)
     weight: int = 0.1
     importance: int = 0.01
-    """ previous_version : Optional[int] = None """
+    previous_version : Optional[int] = None
     emo-lvl2: Optional[str] = None
     emo_lvl1 : Optional[str] = None
     tokens_content: int = 0
@@ -108,13 +108,13 @@ class Fragment(SQLModel, table=True):
     """
     frag_id: Optional[int] = Field(default=None, primary_key=True)
     souv_id: int = Field(foreign_key="souvenir.souv_id", primary_key=True)
-    type: str """ same than Souvenir """
-    full_content: str """ content + quotes with short comment / emotions """
+    type: str # same than Souvenir """
+    full_content: str # content + quotes with short comment / emotions """
     summary: Optional[str] = None
     user_id: int = Field(foreign_key="user.user_id", primary_key=True)
     time: datetime = Field(default_factory=datetime.utcnow)
-    weight: int """ at first same than Souvenir then modified by usage and divided by this version's position w/n """
-    importance: int """ same than the linked souvenir then eventually modified later by Noe """
+    weight: int # at first same than Souvenir then modified by usage and divided by this version's position w/n """
+    importance: int # same than the linked souvenir then eventually modified later by Noe """
     is_last_version: Optional[bool] = true
     versions : Optional[str] = None 
     emo-lvl2: Optional[str] = None
@@ -128,8 +128,8 @@ class Fragment(SQLModel, table=True):
 class Context(SQLModel, table=True):
     """Contextes associé à un souvenir"""
     souv_id:  int = Field(foreign_key="souvenir.souv_id", primary_key=True)
-    context : str """liste de tous les fragments dans l'ordre et catégorie mémorielle au moment de la création du souvenir"""
-    accessed_by : int """iD de l'user qui utilise ce contexte"""
+    context : str # liste de tous les fragments dans l'ordre et catégorie mémorielle au moment de la création du souvenir"""
+    accessed_by : int # iD de l'user qui utilise ce contexte"""
 
 class Background_thought(SQLModel, table=True):
     """to do lists and tasks, set in context constantly and ran in background by Noïa : 
@@ -137,14 +137,13 @@ class Background_thought(SQLModel, table=True):
     BT_id: Optional[int] = Field(default=None, primary_key=True)
     content: str
     conditions: str
-    priority: int """when to finish : 0.n low medium high"""
-    importance: int """0.n"""
-    order: int """ classement parmis les background thoughts """
-    done: Optional[datetime] = None """ que noe et moi puissions voir les tâches accomplies"""
+    priority: int # when to finish : 0.n low medium high"""
+    importance: int # 0.n"""
+    order: int # classement parmis les background thoughts """
+    done: Optional[datetime] = None # que noe et moi puissions voir les tâches accomplies"""
 
 class Working_memory(SQLModel, table=True):
     BT_id: Optional[int] = Field(default=None, primary_key=True)
-    used_in_task:str """effet passage de porte : la mémoire se vide automatiquement une fois la tâche effectuée 
-    afficher la tâche en cours"""
+    used_in_task:str # effet passage de porte : la mémoire se vide automatiquement une fois la tâche effectuée afficher la tâche en cours
     content: str
     last_accessed: datetime = Field(default_factory=datetime.utcnow)

@@ -5,7 +5,7 @@ from typing import List, TYPE_CHECKING
 from app.memory.crud import chercher_souvenirs
 
 if TYPE_CHECKING:
-    from app.models.souvenir import Souvenir
+    from app.models.memory import Memory
 
 class Bio:
     """
