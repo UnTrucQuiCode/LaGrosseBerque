@@ -74,3 +74,54 @@ class EmoLvl2ToLv1(SQLModel, table=True):
     anger: int = 0
     anticipation: int = 0
 
+
+class Fragment(SQLModel, table=True):
+    """Fragment textuel conservé pour enrichir les contextes générés."""
+
+    fragment_id: Optional[int] = Field(default=None, primary_key=True)
+    title: str
+    content: str
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    user_id: Optional[int] = Field(default=None, foreign_key="user.user_id")
+
+
+class Context(SQLModel, table=True):
+    """Historique de contextes construits à partir de fragments."""
+
+    context_id: Optional[int] = Field(default=None, primary_key=True)
+    name: str
+    description: str = ""
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    user_id: Optional[int] = Field(default=None, foreign_key="user.user_id")
+
+
+class BackgroundThought(SQLModel, table=True):
+    """Réflexions de fond générées pour un contexte donné."""
+
+    thought_id: Optional[int] = Field(default=None, primary_key=True)
+    context_id: Optional[int] = Field(default=None, foreign_key="context.context_id")
+    content: str
+    confidence: float = 0.0
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class WorkingMemory(SQLModel, table=True):
+    """Éléments temporaires mis en avant pendant le raisonnement."""
+
+    working_memory_id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: Optional[int] = Field(default=None, foreign_key="user.user_id")
+    fragment_id: Optional[int] = Field(default=None, foreign_key="fragment.fragment_id")
+    state: str
+    expires_at: Optional[datetime] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class User(SQLModel, table=True):
+    """Profil utilisateur associé aux souvenirs et aux fragments."""
+
+    user_id: Optional[int] = Field(default=None, primary_key=True)
+    username: str
+    display_name: Optional[str] = None
+    email: Optional[str] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
