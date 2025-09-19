@@ -20,14 +20,14 @@ class Souvenir(SQLModel, table=True):
     souv_id: Optional[int] = Field(default=None, primary_key=True)
     type: str
     content: str
-    full_content: str # content + comments and emotions of Noe & Nemo
+    full_content: Optional[str] = None # content + comments and emotions of Noe & Nemo
     summary: Optional[str] = None
     user_id: int = Field(foreign_key="user.user_id", primary_key=True)
     time: datetime = Field(default_factory=datetime.utcnow)
     weight: int = 0.1
     importance: int = 0.01
     previous_version : Optional[int] = None
-    emo-lvl2: Optional[str] = None
+    emo_lvl2: Optional[str] = None
     emo_lvl1 : Optional[str] = None
     tokens_content: int = 0
     tokens_full_content: int = 0
@@ -115,9 +115,9 @@ class Fragment(SQLModel, table=True):
     time: datetime = Field(default_factory=datetime.utcnow)
     weight: int # at first same than Souvenir then modified by usage and divided by this version's position w/n """
     importance: int # same than the linked souvenir then eventually modified later by Noe """
-    is_last_version: Optional[bool] = true
+    is_last_version: Optional[bool] = True
     versions : Optional[str] = None 
-    emo-lvl2: Optional[str] = None
+    emo_lvl2: Optional[str] = None
     emo_lvl1 : Optional[str] = None
     tokens_content: int = 0
     tokens_full_content: int = 0

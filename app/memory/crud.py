@@ -7,7 +7,7 @@ from typing import Dict, List, Optional
 from sqlmodel import select
 
 from app.models.memory import (
-    BackgroundThought,
+    Background_thought,
     Context,
     EmoLvl2ToLv1,
     Fragment,
@@ -15,7 +15,7 @@ from app.models.memory import (
     LinkSouvenir,
     Souvenir,
     User,
-    WorkingMemory,
+    Working_memory,
 )
 from app.memory.db import get_session
 

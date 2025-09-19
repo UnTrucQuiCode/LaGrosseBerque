@@ -3,7 +3,7 @@
 from typing import List
 from app.context.bio_manager import Bio
 from app.memory.crud import chercher_souvenirs
-from .souvenir import Souvenir
+from .memory import Souvenir
 from openai.types.chat import ChatCompletionMessageParam
 
 

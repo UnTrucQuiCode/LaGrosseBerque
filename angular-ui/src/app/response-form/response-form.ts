@@ -48,10 +48,9 @@ export class ResponseForm implements OnInit {
     const trimmed = this.message.trim();
     const payload = {
       type: this.type || 'response',
-      summary: '',
       content: trimmed,
       content_complete: trimmed,
-      author: this.author || 'Noe'
+      author: this.author || 'Nemo'
     };
 
     this.http.post<any>('http://localhost:8000/souvenirs/', payload).subscribe({

@@ -9,7 +9,7 @@ from openai import OpenAI
 
 from app.config import OPENAI_API_KEY, OPENAI_MODEL
 from app.models.context import ContextManager
-from app.models.memory import Memory
+from app.models.memory import Souvenir
 from app.memory.crud import enregistrer_souvenir
 from app.utils.logger import logger  # Import du logger
 
