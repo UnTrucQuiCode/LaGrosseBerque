@@ -20,9 +20,9 @@ class Souvenir(SQLModel, table=True):
     souv_id: Optional[int] = Field(default=None, primary_key=True)
     type: str
     content: str
-    full_content: Optional[str] = None # content + comments and emotions of Noe & Nemo
+    full_content: str # content + comments and emotions of Noe & Nemo
     summary: Optional[str] = None
-    user_id: int = Field(foreign_key="user.user_id", primary_key=True)
+    user_name: int = Field(foreign_key="user.user_name", primary_key=True)
     time: datetime = Field(default_factory=datetime.utcnow)
     weight: int = 0.1
     importance: int = 0.01
@@ -109,9 +109,10 @@ class Fragment(SQLModel, table=True):
     frag_id: Optional[int] = Field(default=None, primary_key=True)
     souv_id: int = Field(foreign_key="souvenir.souv_id", primary_key=True)
     type: str # same than Souvenir """
+    content: str 
     full_content: str # content + quotes with short comment / emotions """
     summary: Optional[str] = None
-    user_id: int = Field(foreign_key="user.user_id", primary_key=True)
+    user_name: int = Field(foreign_key="user.user_name", primary_key=True)
     time: datetime = Field(default_factory=datetime.utcnow)
     weight: int # at first same than Souvenir then modified by usage and divided by this version's position w/n """
     importance: int # same than the linked souvenir then eventually modified later by Noe """

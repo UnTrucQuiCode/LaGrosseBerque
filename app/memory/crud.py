@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Dict, List, Optional
 
+from sqlalchemy import func
 from sqlmodel import select
 
 from app.models.memory import (
@@ -20,29 +21,39 @@ from app.models.memory import (
 from app.memory.db import get_session
 
 
-def creer_souvenir(souvenir: Souvenir) -> Souvenir:
+def create_souvenir(souvenir: Souvenir) -> Souvenir:
     """Persist a new :class:`Souvenir` in the database."""
     with get_session() as session:
+        if souvenir.souv_id is None:
+            souvenir.souv_id = _next_souvenir_id(session, souvenir.user_name)
         session.add(souvenir)
         session.commit()
         session.refresh(souvenir)
         return souvenir
 
+def _next_souvenir_id(session, user_name: Optional[str]) -> int:
+    """Return the next souvenir identifier for the given user."""
+    statement = select(func.coalesce(func.max(Souvenir.souv_id), 0) + 1)
+    if user_name is not None:
+        statement = statement.where(Souvenir.user_name == user_name)
+    return session.exec(statement).one()
 
-def obtenir_souvenir(mem_id: int) -> Optional[Souvenir]:
+
+
+def get_souvenir(mem_id: int) -> Optional[Souvenir]:
     """Fetch a souvenir by its identifier."""
     with get_session() as session:
         return session.get(Souvenir, mem_id)
 
 
-def chercher_souvenirs(limit: int = 10) -> List[Souvenir]:
+def seek_souvenirs(limit: int = 10) -> List[Souvenir]:
     """Return a list of souvenirs ordered by recency."""
     with get_session() as session:
         statement = select(Souvenir).order_by(Souvenir.time.desc()).limit(limit)
         return list(session.exec(statement))
 
 
-def mettre_a_jour_souvenir(mem_id: int, data: Dict) -> Optional[Souvenir]:
+def update_souvenir(mem_id: int, data: Dict) -> Optional[Souvenir]:
     """Update fields of an existing souvenir."""
     with get_session() as session:
         souvenir = session.get(Souvenir, mem_id)
@@ -56,7 +67,7 @@ def mettre_a_jour_souvenir(mem_id: int, data: Dict) -> Optional[Souvenir]:
         return souvenir
 
 
-def supprimer_souvenir(mem_id: int) -> bool:
+def delete_souvenir(mem_id: int) -> bool:
     """Remove a souvenir from the database."""
     with get_session() as session:
         souvenir = session.get(Souvenir, mem_id)
@@ -67,14 +78,14 @@ def supprimer_souvenir(mem_id: int) -> bool:
         return True
 
 
-def enregistrer_souvenir(souvenir: Souvenir) -> Souvenir:
-    """Convenience wrapper for :func:`creer_souvenir`."""
-    return creer_souvenir(souvenir)
+"""def save_souvenir(souvenir: Souvenir) -> Souvenir:
+    # Convenience wrapper for :func:`create_souvenir`.
+    return create_souvenir(souvenir)"""
 
 
 # ----- CRUD pour la table emo_lvl2_to_lv1 -----
 
-def creer_emo_lvl2_to_lv1(mapping: EmoLvl2ToLv1) -> EmoLvl2ToLv1:
+def create_emo_lvl2_to_lv1(mapping: EmoLvl2ToLv1) -> EmoLvl2ToLv1:
     """Persiste une nouvelle correspondance d'émotion de niveau 2."""
     with get_session() as session:
         session.add(mapping)
@@ -83,20 +94,20 @@ def creer_emo_lvl2_to_lv1(mapping: EmoLvl2ToLv1) -> EmoLvl2ToLv1:
         return mapping
 
 
-def obtenir_emo_lvl2_to_lv1(emo_lvl2: str) -> Optional[EmoLvl2ToLv1]:
+def get_emo_lvl2_to_lv1(emo_lvl2: str) -> Optional[EmoLvl2ToLv1]:
     """Récupère une correspondance par son nom de niveau 2."""
     with get_session() as session:
         return session.get(EmoLvl2ToLv1, emo_lvl2)
 
 
-def chercher_emo_lvl2_to_lv1(limit: int = 10) -> List[EmoLvl2ToLv1]:
+def seek_emo_lvl2_to_lv1(limit: int = 10) -> List[EmoLvl2ToLv1]:
     """Retourne une liste de correspondances ordonnées par nom."""
     with get_session() as session:
         statement = select(EmoLvl2ToLv1).order_by(EmoLvl2ToLv1.emo_lvl2).limit(limit)
         return list(session.exec(statement))
 
 
-def mettre_a_jour_emo_lvl2_to_lv1(
+def update_emo_lvl2_to_lv1(
     emo_lvl2: str, data: Dict
 ) -> Optional[EmoLvl2ToLv1]:
     """Met à jour les champs d'une correspondance existante."""
@@ -112,7 +123,7 @@ def mettre_a_jour_emo_lvl2_to_lv1(
         return mapping
 
 
-def supprimer_emo_lvl2_to_lv1(emo_lvl2: str) -> bool:
+def delete_emo_lvl2_to_lv1(emo_lvl2: str) -> bool:
     """Supprime une correspondance de la base."""
     with get_session() as session:
         mapping = session.get(EmoLvl2ToLv1, emo_lvl2)
@@ -125,7 +136,7 @@ def supprimer_emo_lvl2_to_lv1(emo_lvl2: str) -> bool:
 
 # ----- CRUD pour les liens -----
 
-def creer_link(link: Link) -> Link:
+def create_link(link: Link) -> Link:
     """Persiste un nouveau :class:`Link` dans la base."""
     with get_session() as session:
         session.add(link)
@@ -134,20 +145,20 @@ def creer_link(link: Link) -> Link:
         return link
 
 
-def obtenir_link(link_id: int) -> Optional[Link]:
+def get_link(link_id: int) -> Optional[Link]:
     """Récupère un lien par son identifiant."""
     with get_session() as session:
         return session.get(Link, link_id)
 
 
-def chercher_links(limit: int = 10) -> List[Link]:
+def seek_links(limit: int = 10) -> List[Link]:
     """Retourne une liste de liens classés par id."""
     with get_session() as session:
         statement = select(Link).order_by(Link.link_id).limit(limit)
         return list(session.exec(statement))
 
 
-def mettre_a_jour_link(link_id: int, data: Dict) -> Optional[Link]:
+def update_link(link_id: int, data: Dict) -> Optional[Link]:
     """Met à jour les champs d'un lien existant."""
     with get_session() as session:
         link = session.get(Link, link_id)
@@ -161,7 +172,7 @@ def mettre_a_jour_link(link_id: int, data: Dict) -> Optional[Link]:
         return link
 
 
-def supprimer_link(link_id: int) -> bool:
+def delete_link(link_id: int) -> bool:
     """Supprime un lien de la base."""
     with get_session() as session:
         link = session.get(Link, link_id)
@@ -174,7 +185,7 @@ def supprimer_link(link_id: int) -> bool:
 
 # ----- Gestion des associations lien-souvenir -----
 
-def associer_link_souvenir(mem_id: int, link_id: int) -> LinkSouvenir:
+def associate_link_souvenir(mem_id: int, link_id: int) -> LinkSouvenir:
     """Crée une association entre un souvenir et un lien."""
     with get_session() as session:
         association = LinkSouvenir(mem_id=mem_id, link_id=link_id)
@@ -184,7 +195,7 @@ def associer_link_souvenir(mem_id: int, link_id: int) -> LinkSouvenir:
         return association
 
 
-def supprimer_association_link_souvenir(mem_id: int, link_id: int) -> bool:
+def delete_association_link_souvenir(mem_id: int, link_id: int) -> bool:
     """Supprime l'association entre un souvenir et un lien."""
     with get_session() as session:
         association = session.get(LinkSouvenir, (mem_id, link_id))
@@ -195,7 +206,7 @@ def supprimer_association_link_souvenir(mem_id: int, link_id: int) -> bool:
         return True
 
 
-def obtenir_links_pour_souvenir(mem_id: int) -> List[Link]:
+def get_links_pour_souvenir(mem_id: int) -> List[Link]:
     """Retourne tous les liens associés à un souvenir donné."""
     with get_session() as session:
         statement = (
@@ -204,4 +215,3 @@ def obtenir_links_pour_souvenir(mem_id: int) -> List[Link]:
             .where(LinkSouvenir.mem_id == mem_id)
         )
         return list(session.exec(statement))
-

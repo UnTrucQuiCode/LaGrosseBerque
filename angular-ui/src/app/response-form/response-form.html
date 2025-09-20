@@ -56,8 +56,8 @@
                       [(ngModel)]="message"></textarea>
 
             <div class="formItem" style="margin-top: 8px; display: flex; gap: 8px; align-items: center;">
-                <input type="text" name="author" [(ngModel)]="author" placeholder="Auteur" style="flex: 0 0 160px;"/>
-                <input type="text" name="type" [(ngModel)]="type" placeholder="Type" style="flex: 0 0 120px;"/>
+                <!-- <input type="text" name="author" [(ngModel)]="author" placeholder="Auteur" style="flex: 0 0 160px;"/> -->
+                <!-- <input type="text" name="type" [(ngModel)]="type" placeholder="Type" style="flex: 0 0 120px;"/> -->
                 <button class="responseButton" type="submit" [disabled]="saving || !form.form.valid">
                     {{ saving ? 'Enregistrement…' : 'Enregistrer' }}
                 </button>

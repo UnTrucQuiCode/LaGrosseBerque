@@ -10,7 +10,7 @@ from openai import OpenAI
 from app.config import OPENAI_API_KEY, OPENAI_MODEL
 from app.models.context import ContextManager
 from app.models.memory import Souvenir
-from app.memory.crud import enregistrer_souvenir
+from app.memory.crud import create_souvenir
 from app.utils.logger import logger  # Import du logger
 
 
@@ -42,7 +42,7 @@ def generate_response(prompt: str, reflexion: Optional[str] = None) -> str:
         souvenir = Souvenir(
             type="dialogue",
             content=f"{prompt}\n→ {message}",
-            author="Nemo",
+            author="Noe",
             time=datetime.utcnow(),
         )
         enregistrer_souvenir(souvenir)
